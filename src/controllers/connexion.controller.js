@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 module.exports.handleInsc = (req, res) => {
   try {
     if (!req.body.email || !req.body.password) {
-      throw new Error("Missing values for email or passsword");
+     res.status(400).json({err:"Missing values for email or passsword"});
     }
     bcrypt
       .hash(req.body.password, 10)
