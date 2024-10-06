@@ -1,5 +1,6 @@
+require("dotenv").config();
+
 const ChatBot = require("../models/Conversation");
-const dotenv = require("dotenv").config();
 const path = require("path");
 const {
   getResponse,
@@ -37,7 +38,7 @@ module.exports.newPrompt = async (req, res) => {
       return;
     }
 //case it's prompt with image
-    const imgPath = `${path.join(__dirname, ".." ,"images")}/${req.file.filename}`;
+    const imgPath = path.join(__dirname, ".." ,"images" ,req.file.filename);
 
     const response = await ableChatFromImage(imgPath, prompt);
     await ChatBot.create({
@@ -46,8 +47,6 @@ module.exports.newPrompt = async (req, res) => {
       response,
     });
     res.status(200).json({ response });
-
-    //
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
